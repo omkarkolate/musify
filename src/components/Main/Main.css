@@ -1,0 +1,66 @@
+.main-container {
+  padding: 7rem 0 10rem 20rem;
+}
+
+.main-header {
+  background-color: #181818;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 6rem 1rem 6rem;
+  font-size: 1.4rem;
+  color: lightgray;
+  border-bottom: 0.1rem solid gray;
+}
+
+.srn-title {
+  display: flex;
+  align-items: center;
+}
+
+.srn {
+  width: 1rem;
+  text-align: right;
+}
+
+.title-artist {
+  margin-left: 2rem;
+  line-height: 1.5;
+}
+
+.main-list-container ul {
+  padding: 0 3rem;
+  list-style: none;
+}
+
+.track-li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  color: white;
+  font-weight: 400;
+  margin: 1rem 0;
+}
+
+.track-details {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.track-li:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 47rem) {
+  .main-container {
+    padding: 7rem 0 10rem 0;
+  }
+}

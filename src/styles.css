@@ -1,0 +1,66 @@
+html {
+  font-size: 10px;
+}
+body {
+  margin: 0;
+  background-color: #121212;
+}
+
+.App {
+  font-family: sans-serif;
+  position: relative;
+}
+
+.App > .app-header {
+  background-color: #080808;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.App > .app-nav {
+  background-color: #040404;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 0;
+}
+
+.App > .app-main {
+  background-color: #121212;
+}
+
+.App > .app-player {
+  background-color: #282828;
+  padding: 1rem 2rem;
+  position: fixed;
+  bottom: 0;
+  width: 98%;
+  z-index: 0;
+}
+
+.App > .loadding {
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 47rem) {
+  .App > .app-player {
+    padding: 0;
+  }
+  .App > .app-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .App > .app-nav {
+    top: unset;
+    bottom: 0;
+    width: 100%;
+    max-height: 6rem;
+  }
+}
