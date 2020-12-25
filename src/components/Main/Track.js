@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MusicContext } from "../../MusicContext";
 
 export default function Track(props) {
-  function selectTrack() {
-    props.getTrack(props.id);
-  }
+  const { setPlayTrack } = useContext(MusicContext);
 
   return (
-    <li className="track-li" onClick={selectTrack}>
+    <li
+      className="track-li"
+      onClick={() => {
+        setPlayTrack(props.id);
+      }}
+    >
       <div className="track-details">
         <div className="srn-title">
           <div className="srn">{props.id + 1}</div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
@@ -19,6 +19,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import "./Player.css";
+import { MusicContext } from "../../MusicContext";
 
 function getMinSec(inputTime) {
   let minutes = Math.floor(inputTime / 60);
@@ -28,9 +29,9 @@ function getMinSec(inputTime) {
   return time;
 }
 
-function Player({ musics, currentPlay, changeTrack }) {
+function Player() {
   const [currentTrack, setCurrentTrack] = useState(0);
-  const [isDisable, setIsDisable] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isPlay, setIsPlay] = useState(false);
   const [volumeValue, setVolumeValue] = useState(0.5);
   const [trackValue, setTrackValue] = useState(0);
@@ -41,34 +42,35 @@ function Player({ musics, currentPlay, changeTrack }) {
   const [isShow, setIsShow] = useState(false);
   const audioEl = useRef(null);
 
-  if (currentPlay !== currentTrack) {
+  const { musics, playTrack, setPlayTrack } = useContext(MusicContext);
+  // console.log("Player: " + value);
+
+  if (playTrack !== currentTrack) {
     if (isPlay) {
       // console.log("Pause ||");
-      setIsPlay(false);
       audioEl.current.pause();
-      setIsDisable(true);
-      // console.log("Disable");
-      setCurrentTrack(currentPlay);
-      // console.log(currentPlay);
+      setIsPlay(false);
+      setCurrentTrack(playTrack);
     } else {
-      setIsDisable(true);
-      setCurrentTrack(currentPlay);
+      setCurrentTrack(playTrack);
     }
   }
 
-  function setPlay() {
-    // console.log("play it...", audioEl.current.duration);
-    setTrackDuration(audioEl.current.duration);
-    if (isDisable) {
-      setIsDisable(false);
-      // console.log("Enable");
-      // console.log("Play >");
+  function handleAutoplay() {
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+    } else {
       setIsPlay(true);
       audioEl.current.play();
     }
   }
 
-  function playPause() {
+  function setDuration() {
+    // console.log("play it...", audioEl.current.duration);
+    setTrackDuration(audioEl.current.duration);
+  }
+
+  function handlePlayPause() {
     if (isPlay) {
       setIsPlay(false);
       audioEl.current.pause();
@@ -94,7 +96,7 @@ function Player({ musics, currentPlay, changeTrack }) {
     // console.log("Pause ||");
     setIsPlay(false);
     audioEl.current.pause();
-    playNext();
+    playNextTrack();
   }
 
   function setVolume(event, newValue) {
@@ -105,7 +107,7 @@ function Player({ musics, currentPlay, changeTrack }) {
     audioEl.current.volume = newValue;
   }
 
-  function muteUnmute() {
+  function handleMuteUnmute() {
     if (isMute) {
       setVolumeValue(prevVolume);
       audioEl.current.volume = prevVolume;
@@ -126,7 +128,7 @@ function Player({ musics, currentPlay, changeTrack }) {
     }
   }
 
-  function handleShowHide() {
+  function handleShowHideMobilePlayer() {
     if (isShow) {
       setIsShow(false);
     } else {
@@ -134,33 +136,40 @@ function Player({ musics, currentPlay, changeTrack }) {
     }
   }
 
-  function playNext() {
+  function playNextTrack() {
     if (currentTrack < musics.length - 1) {
       // console.log("inside play next", currentTrack);
-      changeTrack(currentTrack + 1);
+      setPlayTrack(currentTrack + 1);
     }
   }
 
-  function playPrevious() {
+  function playPreviousTrack() {
     if (currentTrack > 0) {
-      changeTrack(currentTrack - 1);
+      setPlayTrack(currentTrack - 1);
     }
   }
 
   /* MiniPlayer */
   const miniPlayer = (
     <div className="miniplayer">
-      <div className="mini-track-thumbnail" onClick={handleShowHide}>
+      <div
+        className="mini-track-thumbnail"
+        onClick={handleShowHideMobilePlayer}
+      >
         <img
-          src="https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp"
+          src={
+            musics[currentTrack]
+              ? musics[currentTrack].thumbnail
+              : "https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp"
+          }
           alt="Track Thumbnail"
         />
       </div>
-      <div className="mini-track-title" onClick={handleShowHide}>
+      <div className="mini-track-title" onClick={handleShowHideMobilePlayer}>
         {musics[currentTrack] ? musics[currentTrack].title : "Track Title"}
       </div>
       <div className="mini-play-pause-btn">
-        <button onClick={playPause} disabled={isDisable ? true : ""}>
+        <button onClick={handlePlayPause}>
           {isPlay ? <PauseIcon /> : <PlayArrowIcon />}
         </button>
       </div>
@@ -172,13 +181,17 @@ function Player({ musics, currentPlay, changeTrack }) {
     <div className={isShow ? "show" : "hide"}>
       <div className="mobile-player">
         <div className="mobile-player-header">
-          <button onClick={handleShowHide}>
+          <button onClick={handleShowHideMobilePlayer}>
             <KeyboardArrowDownIcon />
           </button>
         </div>
         <div className="mobile-player-track-thumbnail">
           <img
-            src="https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp"
+            src={
+              musics[currentTrack]
+                ? musics[currentTrack].thumbnail
+                : "https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp"
+            }
             alt="Track Thumbnail"
           />
         </div>
@@ -209,17 +222,13 @@ function Player({ musics, currentPlay, changeTrack }) {
           </div>
         </div>
         <div className="mobile-player-controls">
-          <button onClick={playPrevious}>
+          <button onClick={playPreviousTrack}>
             <SkipPreviousIcon />
           </button>
-          <button
-            className="play-pause-btn"
-            onClick={playPause}
-            disabled={isDisable ? true : ""}
-          >
+          <button className="play-pause-btn" onClick={handlePlayPause}>
             {isPlay ? <PauseCircleFilledIcon /> : <PlayCircleFilledWhiteIcon />}
           </button>
-          <button onClick={playNext}>
+          <button onClick={playNextTrack}>
             <SkipNextIcon />
           </button>
         </div>
@@ -229,11 +238,16 @@ function Player({ musics, currentPlay, changeTrack }) {
 
   return (
     <>
+      {/* Desktop player view */}
       <div className="player-container">
         <div className="player-left">
           <div className="playing-track-thumbnail">
             <img
-              src="https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp"
+              src={
+                musics[currentTrack]
+                  ? musics[currentTrack].thumbnail
+                  : "https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp"
+              }
               alt="Track Thumbnail"
             />
           </div>
@@ -259,17 +273,13 @@ function Player({ musics, currentPlay, changeTrack }) {
             <button>
               <ShuffleIcon />
             </button>
-            <button onClick={playPrevious}>
+            <button onClick={playPreviousTrack}>
               <SkipPreviousIcon />
             </button>
-            <button
-              className="play-pause-btn"
-              onClick={playPause}
-              disabled={isDisable ? true : ""}
-            >
+            <button className="play-pause-btn" onClick={handlePlayPause}>
               {isPlay ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon />}
             </button>
-            <button onClick={playNext}>
+            <button onClick={playNextTrack}>
               <SkipNextIcon />
             </button>
             <button>
@@ -280,10 +290,18 @@ function Player({ musics, currentPlay, changeTrack }) {
             <div className="time">{getMinSec(trackValue)}</div>
             <audio
               src={musics[currentTrack] ? musics[currentTrack].link : ""}
+              preload="metadata"
               ref={audioEl}
-              onCanPlayThrough={setPlay}
+              onLoadedMetadata={setDuration}
               onTimeUpdate={setSlider}
               onEnded={handleTrackEnd}
+              onCanPlay={handleAutoplay}
+              onPause={() => {
+                setIsPlay(false);
+              }}
+              onPlay={() => {
+                setIsPlay(true);
+              }}
             />
             <Slider
               value={trackValue}
@@ -300,7 +318,7 @@ function Player({ musics, currentPlay, changeTrack }) {
           <button>
             <QueueMusicIcon />
           </button>
-          <button onClick={muteUnmute}>
+          <button onClick={handleMuteUnmute}>
             {isMute ? (
               <VolumeOffIcon />
             ) : volumeValue > 0 ? (
@@ -331,3 +349,4 @@ function Player({ musics, currentPlay, changeTrack }) {
 export default Player;
 
 //https://bit.ly/3oY0fwk
+//https://i.insider.com/5d113b41e3ecba51db1aef36?width=500&format=jpeg&auto=webp

@@ -162,6 +162,14 @@
     height: 5rem;
   }
 
+  .miniplayer .mini-track-title {
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .miniplayer .mini-play-pause-btn {
     margin-right: 2rem;
   }
@@ -181,7 +189,14 @@
   .mobile-player {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(#e66465, #9198e5);
+    background-image: linear-gradient(
+      to bottom,
+      #55585c,
+      #464b4d,
+      #3a3e3e,
+      #303130,
+      #252524
+    );
     width: 100%;
     padding: 2rem;
     color: white;

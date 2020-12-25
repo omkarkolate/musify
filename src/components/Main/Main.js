@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import Track from "./Track";
 import "./Main.css";
+import { MusicContext } from "../../MusicContext";
 
-function Main({ musics, getPlayTrack }) {
+function Main() {
   // console.log(musics.length ? musics[0] : "empty");
 
-  function selectedTrack(TrackId) {
-    getPlayTrack(TrackId);
-  }
+  const { musics } = useContext(MusicContext);
 
   return (
     <div className="main-container">
@@ -30,7 +29,6 @@ function Main({ musics, getPlayTrack }) {
                 id={index}
                 trackTitle={track.title}
                 trackDuration={track.duration}
-                getTrack={selectedTrack}
               />
             );
           })}

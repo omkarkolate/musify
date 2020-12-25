@@ -42,7 +42,7 @@ body {
   z-index: 0;
 }
 
-.App > .loadding {
+.loadding {
   color: white;
   text-align: center;
 }
