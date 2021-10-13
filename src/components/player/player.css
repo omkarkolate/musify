@@ -1,0 +1,309 @@
+.App > .app-player {
+	background-color: #282828;
+	padding: 1rem 2rem;
+	position: fixed;
+	bottom: 0;
+	width: 98%;
+	z-index: 0;
+}
+
+.player-container {
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.miniplayer {
+	display: none;
+}
+
+.mobile-player {
+	display: none;
+}
+
+.player-left {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.playing-track-thumbnail img {
+	width: 5.6rem;
+	height: 5.6rem;
+}
+
+.track-info {
+	margin: 0 2rem 0 1rem;
+}
+
+.track-name {
+	font-size: 1.5rem;
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+.artists {
+	font-size: 1.2rem;
+}
+
+.player-container button {
+	border: none;
+	outline: none;
+	padding: 0;
+	background-color: transparent;
+	margin: 0 1rem;
+	color: gray;
+}
+
+.fav-btn .MuiSvgIcon-root {
+	font-size: 2rem;
+}
+
+.like {
+	color: #55ba55;
+}
+
+.player-center {
+	width: 35%;
+}
+
+.player-controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.player-controls .MuiSvgIcon-root {
+	font-size: 2rem;
+}
+
+.play-pause-btn .MuiSvgIcon-root {
+	font-size: 4rem;
+}
+
+.player-slider {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.player-slider .time {
+	margin: 0 1rem;
+	font-size: 1.2rem;
+	color: gray;
+	font-weight: 300;
+}
+
+.player-slider .MuiSlider-root,
+.player-right .MuiSlider-root {
+	color: white;
+}
+
+.MuiSlider-root:hover {
+		color: #55ba55;
+}
+
+.MuiSlider-root .MuiSlider-track,
+.MuiSlider-root .MuiSlider-rail {
+	height: 0.3rem;
+}
+
+.player-right {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-right: 1rem;
+	width: 20%;
+}
+
+.player-right > button {
+	margin: 0;
+	margin-right: 1.5rem;
+}
+
+.player-right > button .MuiSvgIcon-root {
+	font-size: 2rem;
+}
+
+.hide {
+	display: none;
+	/* position: fixed;
+  bottom: -1; */
+}
+
+.upgrade button {
+	background-color: #050505;
+	color: #eaeaea;
+	padding: 1rem;
+	border-radius: 2rem;
+	border: 0.1rem solid #eaeaea;
+	outline: 0;
+	min-width: max-content;
+}
+
+@media screen and (max-width: 64rem) {
+	.App > .app-player {
+		width: 95%;
+	}
+
+	.player-right {
+		width: 25%;
+	}
+}
+
+@media screen and (max-width: 47rem) {
+	.App > .app-player {
+		padding: 0;
+	}
+
+	.player-container {
+		display: none;
+	}
+
+	.show {
+		display: flex;
+		position: fixed;
+		bottom: unset;
+		top: 0;
+		z-index: 1;
+		width: 100vw;
+		height: 100vh;
+		background-color: gray;
+	}
+
+	.miniplayer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: fixed;
+		bottom: 5rem;
+		background-color: black;
+		color: white;
+		width: 100%;
+		font-size: 2rem;
+	}
+
+	.miniplayer .mini-track-thumbnail img {
+		width: 6rem;
+		height: 5rem;
+	}
+
+	.miniplayer .mini-track-title {
+		width: 100%;
+		height: 4rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.miniplayer .mini-play-pause-btn {
+		margin-right: 2rem;
+	}
+
+	.miniplayer .mini-play-pause-btn button {
+		background-color: transparent;
+		color: white;
+		outline: 0;
+		border: 0;
+		font-size: 2rem;
+	}
+
+	.miniplayer .mini-play-pause-btn button .MuiSvgIcon-root {
+		font-size: 4rem;
+	}
+
+	.mobile-player {
+		display: flex;
+		flex-direction: column;
+		background-image: linear-gradient(
+			to bottom,
+			#55585c,
+			#464b4d,
+			#3a3e3e,
+			#303130,
+			#252524
+		);
+		width: 100%;
+		padding: 2rem;
+		color: white;
+	}
+
+	.mobile-player-track-thumbnail {
+		margin: 0 auto;
+	}
+	.mobile-player-track-thumbnail img {
+		width: 25rem;
+		height: 25rem;
+	}
+
+	.mobile-player-header {
+		display: flex;
+		align-items: center;
+	}
+
+	.mobile-player-header button {
+		background-color: transparent;
+		outline: 0;
+		border: 0;
+	}
+
+	.mobile-player-header button .MuiSvgIcon-root {
+		font-size: 4rem;
+	}
+
+	.mobile-player h4,
+	h5 {
+		margin: 0;
+	}
+
+	.mobile-player-track-title {
+		margin-top: 1rem;
+	}
+
+	.mobile-player-track-title h4 {
+		font-size: 1.8rem;
+		font-weight: bold;
+	}
+
+	.mobile-player-track-artist h5 {
+		font-size: 1.2rem;
+	}
+
+	.mobile-player-track-slider .MuiSlider-root {
+		color: white;
+		padding: 2rem 0 1rem;
+	}
+
+	.mobile-player-track-time {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 1.2rem;
+	}
+
+	.mobile-player-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.mobile-player-controls button {
+		background-color: transparent;
+		outline: 0;
+		border: 0;
+	}
+
+	.mobile-player-controls button .MuiSvgIcon-root {
+		color: white;
+		font-size: 4rem;
+	}
+	
+	.mobile-player-controls .fav-btn .like {
+		color: #55ba55;
+	}
+
+	.mobile-player-controls .play-pause-btn .MuiSvgIcon-root {
+		font-size: 8rem;
+	}
+}

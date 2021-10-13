@@ -1,3 +1,12 @@
+.App > .app-header {
+	background-color: #080808;
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+	z-index: 0;
+}
+
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -44,18 +53,6 @@
   color: gray;
 }
 
-.upgrade {
-  margin-right: 3rem;
-}
-
-.upgrade button {
-  background-color: #050505;
-  color: #eaeaea;
-  padding: 1rem 3rem;
-  border-radius: 2rem;
-  border: 0.1rem solid #eaeaea;
-  outline: 0;
-}
 
 .login-user .MuiAvatar-root {
   height: 2.8rem;
@@ -71,6 +68,12 @@ button {
 }
 
 @media screen and (max-width: 47rem) {
+	.App > .app-header {
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+
   .header-left,
   .header-right {
     display: none;

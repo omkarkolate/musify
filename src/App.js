@@ -1,45 +1,18 @@
-import React, { useState } from "react";
-import { MusicProvider } from "./MusicContext";
-import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
-import Main from "./components/Main/Main";
-import Player from "./components/Player/Player";
-import Loadding from "./Loadding";
+import React from "react";
+import { Home, LikedMusics, Playlist } from "./pages/index";
 import "./styles.css";
+import { Routes, Route } from "react-router-dom";
+import { Player } from "./components/index";
 
 export default function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  function getLoadStatus(status) {
-    if (status) {
-      setIsLoaded(true);
-    }
-  }
-
-  if (isLoaded) {
-    return (
-      <div className="App">
-        <header className="app-header">
-          <Header />
-        </header>
-        <aside className="app-nav">
-          <Navbar />
-        </aside>
-        <MusicProvider>
-          <main className="app-main">
-            <Main />
-          </main>
-          <footer className="app-player">
-            <Player />
-          </footer>
-        </MusicProvider>
-      </div>
-    );
-  } else {
-    return (
-      <MusicProvider>
-        <Loadding setLoadStatus={getLoadStatus} />
-      </MusicProvider>
-    );
-  }
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/liked-musics" element={<LikedMusics />} />
+				<Route path="/playlist" element={<Playlist />} />
+			</Routes>
+			<Player />
+		</div>
+	);
 }
